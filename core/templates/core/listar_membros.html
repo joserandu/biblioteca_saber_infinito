@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Membros</title>
+</head>
+<body>
+
+    <h1>Membros</h1>
+        <ul>
+        {% for membro in membros %}
+          <li>{{ membro.nome }} ({{ membro.id_membro }})</li>
+        {% endfor %}
+        </ul>
+
+</body>
+</html>

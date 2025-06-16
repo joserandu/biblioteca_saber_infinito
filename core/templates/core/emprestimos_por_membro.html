@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Empréstimos</title>
+</head>
+<body>
+
+    <h1>Empréstimos de {{ membro.nome }}</h1>
+        <ul>
+        {% for e in emprestimos %}
+          <li>{{ e.copia.livro.titulo }}: {{ e.periodo }}</li>
+        {% endfor %}
+        </ul>
+
+</body>
+</html>
