@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedir emprestimo</title>
+</head>
+<body>
+    <h1>Pedir Empréstimo de {{ livro.titulo }}</h1>
+
+    {% if erro %}
+      <p style="color:red;">{{ erro }}</p>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <label for="membro">Selecione o membro:</label>
+      <select name="membro" id="membro" required>
+        <option value="">-- Selecione --</option>
+        {% for membro in membros %}
+          <option value="{{ membro.id }}">{{ membro.nome }} ({{ membro.id_membro }})</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Confirmar Empréstimo</button>
+    </form>
+
+</body>
+</html>

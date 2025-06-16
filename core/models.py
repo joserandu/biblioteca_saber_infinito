@@ -32,7 +32,8 @@ class PeriodoEmprestimo(models.Model):
 class Livro(models.Model):
     titulo = models.CharField(max_length=200)
     autores = models.CharField(max_length=200)
-    isbn = models.OneToOneField(ISBN, on_delete=models.CASCADE)
+    isbn = models.CharField(max_length=15, unique=True)
+    numero_copias = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return f"{self.titulo} ({self.isbn})"
@@ -56,19 +57,20 @@ class CopiaDeLivro(models.Model):
 
 class Membro(models.Model):
     nome = models.CharField(max_length=100)
-    id_membro = models.CharField(max_length=10, unique=True)
+    cpf = models.CharField(max_length=11, unique=True)
     contato = models.CharField(max_length=100)
-    endereco = models.OneToOneField(EnderecoMembro, on_delete=models.CASCADE)
+    endereco = models.CharField(max_length=200, null=True, blank=True)
+    email = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.nome} ({self.id_membro})"
+        return f"{self.nome} ({self.cpf})"
 
 
 class Emprestimo(models.Model):
     membro = models.ForeignKey(Membro, on_delete=models.CASCADE)
     copia = models.ForeignKey(CopiaDeLivro, on_delete=models.CASCADE)
     periodo = models.OneToOneField(PeriodoEmprestimo, on_delete=models.CASCADE)
-    data_devolucao_real = models.DateField(null=True, blank=True)
+    data_devolucao_real = models.DateField(null=True, blank=True, default=timezone.now)
 
     def esta_atrasado(self):
         if not self.data_devolucao_real and timezone.now().date() > self.periodo.data_fim:

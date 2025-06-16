@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listar Emprestimos</title>
+</head>
+<body>
+    <h1>Lista de Empréstimos</h1>
+        <ul>
+            {% for emprestimo in emprestimos %}
+                <li>{{ emprestimo }} - {{ emprestimo.data_emprestimo }} até {{ emprestimo.data_prevista_devolucao }}</li>
+            {% empty %}
+                <li>Nenhum empréstimo encontrado.</li>
+            {% endfor %}
+        </ul>
+
+    <p><a href="{% url 'index' %}">Voltar</a></p>
+
+</body>
+</html>

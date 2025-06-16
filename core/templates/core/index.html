@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca Saber Infinito</title>
+</head>
+<body>
+    <h1>Bem-vindo à Biblioteca Saber Infinito!</h1>
+    <p>Selecione o que você deseja fazer:</p>
+    <ul>
+        <li><a href="{% url 'listar_livros' %}">Listar Livros</a></li>
+        <li><a href="{% url 'listar_membros' %}">Listar Membros</a></li>
+        <li><a href="{% url 'cadastrar_livro' %}">Cadastrar Livro</a></li>
+        <li><a href="{% url 'cadastrar_membro' %}">Cadastrar Membro</a></li>
+        <li><a href="{% url 'listar_emprestimos' %}">Listar Empréstimos</a></li>
+    </ul>
+</body>
+</html>

@@ -11,5 +11,7 @@
         <p>ISBN: {{ livro.isbn }}</p>
         <p>Cópias disponíveis: {{ livro.copias_disponiveis }}</p>
 
+    <a href="{% url 'pedir_emprestimo' livro.id %}">Pedir Empréstimo</a>
+
 </body>
 </html>
