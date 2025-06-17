@@ -70,14 +70,19 @@ def detalhes_livro(request, livro_id):
 def pedir_emprestimo(request, livro_id):
     livro = get_object_or_404(Livro, id=livro_id)
     membros = Membro.objects.all()
-    copias_disponiveis = CopiaDeLivro.objects.filter(livro=livro, disponivel=True)
+
+    # Buscar cópias do livro que não estão com empréstimo ativo
+    copias_disponiveis = [
+        copia for copia in CopiaDeLivro.objects.filter(livro=livro)
+        if not Emprestimo.objects.filter(copia=copia, status='ativo').exists()
+    ]
 
     if request.method == 'POST':
         membro_id = request.POST.get('membro')
         membro = get_object_or_404(Membro, id=membro_id)
 
-        if copias_disponiveis.exists():
-            copia = copias_disponiveis.first()
+        if copias_disponiveis:
+            copia = copias_disponiveis[0]
 
             periodo = PeriodoEmprestimo.objects.create(
                 data_inicio=timezone.now().date(),
@@ -87,11 +92,9 @@ def pedir_emprestimo(request, livro_id):
             Emprestimo.objects.create(
                 membro=membro,
                 copia=copia,
-                periodo=periodo
+                periodo=periodo,
+                status='ativo'  # Lembre de ter um campo status no modelo Emprestimo
             )
-
-            copia.disponivel = False
-            copia.save()
 
             return redirect('listar_emprestimos')
         else:
@@ -105,4 +108,3 @@ def pedir_emprestimo(request, livro_id):
         'livro': livro,
         'membros': membros
     })
-

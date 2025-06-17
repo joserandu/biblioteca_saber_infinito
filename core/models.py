@@ -71,6 +71,7 @@ class Emprestimo(models.Model):
     copia = models.ForeignKey(CopiaDeLivro, on_delete=models.CASCADE)
     periodo = models.OneToOneField(PeriodoEmprestimo, on_delete=models.CASCADE)
     data_devolucao_real = models.DateField(null=True, blank=True, default=timezone.now)
+    # status = models.CharField(max_length=20, default='ativo')
 
     def esta_atrasado(self):
         if not self.data_devolucao_real and timezone.now().date() > self.periodo.data_fim:
